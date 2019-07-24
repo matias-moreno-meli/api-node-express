@@ -15,7 +15,6 @@ function getSites(req, res) {
     let atributo;
     let valor;
 
-
     if (siteId && paymentMethodId && nearTo) {
         MELI_END_POINT_SITES.pathname = 'sites/' + siteId + '/payment_methods/' + paymentMethodId + '/agencies';
 
@@ -48,7 +47,7 @@ function getSites(req, res) {
         }
     }
 
-    siteService.getSites(MELI_END_POINT_SITES.href, atributo.toString(), valor.toString())
+    siteService.getSites(MELI_END_POINT_SITES.href, atributo, valor)
         .then(function (data) {
             if (data) {
                 res.status(200).send(data);
@@ -59,7 +58,6 @@ function getSites(req, res) {
         .catch(function (err) {
             res.status(400).send({message: err});
         });
-
 
 }
 
