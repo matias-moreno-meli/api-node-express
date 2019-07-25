@@ -18,7 +18,14 @@ function saveAgency(agency) {
                 } else {
                     agencies = JSON.parse(data);
 
-                    writeFile(reject, done, agency, agencies);
+                    const resultado = agencies.find(x => x.id === agency.id);
+
+                    if (resultado) {
+                        done('la agencia ya se encuentra entre las agencias recomendadas.')
+                    } else {
+                        writeFile(reject, done, agency, agencies);
+
+                    }
 
                 }
 
