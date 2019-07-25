@@ -2,7 +2,8 @@ var fs = require("fs");
 
 module.exports = {
     saveAgency,
-    deleteAgency
+    deleteAgency,
+    getAgencies
 };
 
 function saveAgency(agency) {
@@ -83,6 +84,25 @@ function deleteAgency(agency) {
             });
         } else {
             done('Esta agencia no se encontraba entre las recomendadas.');
+        }
+    })
+}
+
+function getAgencies() {
+
+    return new Promise(function (done, reject) {
+        let agencies = [];
+        if (fs.existsSync("./dao/files/agencias_recomendadas.json")) {
+            fs.readFile("./dao/files/agencias_recomendadas.json", "utf-8", (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    agencies = JSON.parse(data);
+                    done(agencies);
+                }
+            });
+        } else {
+            done(agencies);
         }
     })
 }

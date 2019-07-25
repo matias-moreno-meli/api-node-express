@@ -2,7 +2,8 @@ var agencyDao = require('../dao/agencies-dao');
 
 module.exports = {
     saveAgency,
-    deleteAgency
+    deleteAgency,
+    getAgencies
 };
 
 function saveAgency(agency) {
@@ -20,6 +21,7 @@ function saveAgency(agency) {
 
     })
 }
+
 function deleteAgency(agency) {
 
     return new Promise(function (done, reject) {
@@ -27,6 +29,20 @@ function deleteAgency(agency) {
             .then(function (data) {
                 console.log(data);
 
+                done(data);
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+
+    })
+}
+
+function getAgencies() {
+
+    return new Promise(function (done, reject) {
+        agencyDao.getAgencies()
+            .then(function (data) {
                 done(data);
             })
             .catch(function (err) {

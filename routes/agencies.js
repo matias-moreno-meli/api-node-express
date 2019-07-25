@@ -4,5 +4,6 @@ var agenciesController = require('../controllers/agencies-controller');
 
 router.post('/', agenciesController.saveAgency);
 router.delete('/', agenciesController.deleteAgency);
+router.get('/', agenciesController.getAgencies);
 
 module.exports = router;
