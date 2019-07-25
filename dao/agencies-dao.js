@@ -1,7 +1,8 @@
 var fs = require("fs");
 
 module.exports = {
-    saveAgency
+    saveAgency,
+    deleteAgency
 };
 
 function saveAgency(agency) {
@@ -51,4 +52,37 @@ function writeFile(reject, done, agency, agencies) {
         }
     });
 
+}
+
+function deleteAgency(agency) {
+
+    return new Promise(function (done, reject) {
+        let agencies = [];
+        if (fs.existsSync("./dao/files/agencias_recomendadas.json")) {
+            fs.readFile("./dao/files/agencias_recomendadas.json", "utf-8", (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    agencies = JSON.parse(data);
+                    const resultado = agencies.filter(x => x.id !== agency.id);
+
+                    if (resultado) {
+                        console.log('la agencia dejo de ser recomendada.');
+
+                        fs.writeFile('./dao/files/agencias_recomendadas.json', JSON.stringify(resultado), (err) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                done(resultado);
+                            }
+                        });
+                    } else {
+                        done('Esta agencia no se encontraba entre las recomendadas.');
+                    }
+                }
+            });
+        } else {
+            done('Esta agencia no se encontraba entre las recomendadas.');
+        }
+    })
 }
